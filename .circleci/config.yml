@@ -11,7 +11,11 @@ commands:
             - bundler-cache-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Bundle Install"
-          command: bin/bundle install --path=.bundle
+          command: |
+            set -euxo pipefail
+            bin/bundle install --path=.bundle
+            git diff Gemfile.lock
+            checksum Gemfile.lock
       - save_cache:
           key: bundler-cache-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
           paths:
