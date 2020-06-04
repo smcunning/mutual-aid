@@ -29,13 +29,13 @@
           <p v-if="description" class="mb-1"> {{ description }} </p>
 
           <!-- If any subcategories are selected, add parent category to list of tags submitted -->
-          <input v-if="anySelected(subcategories)" :name="fieldNamePrefix" :value="id" type="hidden" />
+          <input v-if="anySelected(subcategories)" :name="categoriesFieldName" :value="id" type="hidden" />
 
           <div v-for="{id: subId, name: subName, description: subDescription} in subcategories" :key="subId">
-            <b-field class="pb-05" grouped>
+            <b-field grouped class="mb-1">
               <b-checkbox
                 v-model="selectedTags"
-                :name="fieldNamePrefix"
+                :name="categoriesFieldName"
                 :native-value="subId"
                 size="is-medium"
               >
@@ -43,6 +43,21 @@
                 <span v-if="subDescription" class="is-size-6"> {{ "- " + subDescription }} </span>
               </b-checkbox>
 
+              <b-select
+                v-if="isSelected(subName)"
+                :name="composeFieldName(detailsFieldNamePrefix, subId, 'urgency')"
+                size="is-small"
+                class="ml-1"
+                placeholder="Urgency …"
+              >
+                <option
+                  v-for="{id: urgencyId, name: urgencyName} in urgency_levels"
+                  :key="urgencyId"
+                  :value="urgencyId"
+                >
+                  {{ urgencyName }}
+                </option>
+              </b-select>
             </b-field>
           </div>
         </div>
@@ -53,13 +68,16 @@
 
 <script>
 import {capitalize} from 'utils/string'
+import {composeFieldName} from 'utils/form'
 
 export default {
   name: 'CategoryFields',
   props: {
-    fieldNamePrefix: String,
-    categories: Array,
-    tags: Array,
+    categoriesFieldName:    String,
+    categories:             Array,
+    detailsFieldNamePrefix: String,
+    tags:                   Array,
+    urgency_levels:         Array,
   },
   data() {
     return {
@@ -77,12 +95,13 @@ export default {
     },
   },
   methods: {
-    isSelected(tag) {
-      return this.selectedTags.indexOf(tag) >= 0
+    isSelected(tagName) {
+      return this.selectedTags.indexOf(tagName) >= 0
     },
     anySelected(subcategories) {
       return subcategories.find(({name}) => this.isSelected(name))
     },
+    composeFieldName,
   },
   filters: { capitalize },
 }

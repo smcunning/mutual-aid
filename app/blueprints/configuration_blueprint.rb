@@ -14,4 +14,8 @@ class ConfigurationBlueprint < Blueprinter::Base
   association(:service_areas, blueprint: ServiceAreaBlueprint) do
     ServiceArea.publicly_visible.eager_load(:string_translations)
   end
+
+  association(:urgency_levels, blueprint: DefaultBlueprint) do
+    UrgencyLevel.all
+  end
 end

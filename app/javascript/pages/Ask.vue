@@ -34,9 +34,11 @@
     /><SpacerField />
 
     <CategoryFields
-      :fieldNamePrefix="withListingPrefix('categories', '[]')"
+      :categoriesFieldName="withListingPrefix('categories', '[]')"
+      :detailsFieldNamePrefix="withListingPrefix('category_details')"
       :categories="configuration.categories"
       :tags="listing.tag_list"
+      :urgency_levels="configuration.urgency_levels"
     >
       <p class="label is-medium">
         What are you requesting?

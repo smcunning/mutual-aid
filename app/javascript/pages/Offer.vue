@@ -34,7 +34,8 @@
     /><SpacerField />
 
     <CategoryFields
-      :fieldNamePrefix="withListingPrefix('categories', '[]')"
+      :categoriesFieldName="withListingPrefix('categories', '[]')"
+      :detailsFieldNamePrefix="withListingPrefix('category_details')"
       :categories="configuration.categories"
       :tags="listing.tag_list"
     >

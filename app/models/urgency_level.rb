@@ -5,6 +5,10 @@ UrgencyLevel = Struct.new(:id, :name, :other)
 class UrgencyLevel
   TYPES = [new(1, 'Within 1-2 days'), new(2, 'Within 3-5 days'), new(3, 'About a week'), new(4, 'Anytime')].freeze
 
+  def self.all
+    TYPES
+  end
+
   def self.as_filter_types
     TYPES
   end
