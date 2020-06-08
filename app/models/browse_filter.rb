@@ -32,7 +32,7 @@ class BrowseFilter
     @contributions ||= begin
       model_names = parameters.fetch('ContributionType', ALLOWED_MODEL_NAMES)
       models = ContributionType.where(name: model_names.intersection(ALLOWED_MODEL_NAMES)).map(&:model)
-      models.map { |model| filter(model) }.flatten
+      models.map { |model| filter(model.unmatched) }.flatten
     end
   end
 
