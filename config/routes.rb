@@ -3,15 +3,16 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "/admin",                    to: "admin#landing_page",    as: "landing_page_admin"
+  get "/admin/forms",              to: "admin#form_admin",      as: "form_admin"
   get "/admin/volunteers",         to: "admin#volunteer_admin", as: "volunteer_admin"
-  get "/glossary",                 to: "admin#glossary",        as: "glossary_admin"
-  get "/yearbook",                 to: "admin#yearbook",        as: "yearbook_admin"
+  get "/admin/dispatch",           to: "admin#dispatch_steps",  as: "dispatch_steps_admin"
+  get "/admin/glossary",           to: "admin#glossary",        as: "glossary_admin"
+  get "/admin/yearbook",           to: "admin#yearbook",        as: "yearbook_admin"
 
   get "/public",                   to: "public_pages#landing_page",        as: "landing_page_public"
   get "/about",                    to: "public_pages#about",               as: "about_public"
   get "/announcements_list",       to: "public_pages#announcements",       as: "announcements_public"
   get "/community_resources_list", to: "public_pages#community_resources", as: "community_resources_public"
-  get "/public_contributions",     to: redirect('/contributions'),       as: "contributions_public" # TODO remove this
 
   resources :announcements
   resources :asks, only: [:index, :edit, :update, :new, :create]
@@ -28,14 +29,18 @@ Rails.application.routes.draw do
   resources :contributions, only: [:index] do
     member do
       get "/respond", to: "contributions#respond", as: "respond"
+      get "/triage", to: "contributions#triage", as: "triage"
+      patch "/triage", to: "contributions#triage_update"
+      post "/triage", to: "contributions#triage_update"
     end
   end
   resources :custom_form_questions
   resources :donations
   resources :feedbacks
+  resources :forms
+  resources :form_questions
   resources :history_logs, only: [:index]
   resources :location_types
-  get "/listings_index", to: "listings#listings_index", as: "listings_index_list"
   resources :listings do
     member do
       get "/match", to: "listings#match", as: "match_listing"
@@ -64,5 +69,5 @@ Rails.application.routes.draw do
   resources :teams
   resources :users
 
-  root :to => 'public#landing_page'
+  root :to => 'public_pages#landing_page'
 end

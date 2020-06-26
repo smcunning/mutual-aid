@@ -23,12 +23,14 @@
 <div class="row columns">
   <div class="columns column is-12">
     <div class="column is-4">
-      <%= link_to "View unmatched Asks", listings_path(contribution_type: "Ask") %> <span class="tag"><%= @asks_unmatched_count %></span>
+      <%= link_to "View unmatched Asks", contributions_path(contribution_type: "Ask") %> <span class="tag"><%= @asks_unmatched_count %></span>
       <br>
-      <%= link_to "View unmatched Offers", listings_path(contribution_type: "Offer") %> <span class="tag"><%= @offers_unmatched_count %></span>
+      <%= link_to "View unmatched Offers", contributions_path(contribution_type: "Offer") %> <span class="tag"><%= @offers_unmatched_count %></span>
     </div>
     <div class="column is-4">
       <%= link_to "View all Matches", matches_path %> <span class="tag"><%= @match_count %></span>
+      <br>
+      <%= link_to "View all Listings", listings_path %> <span class="tag"><%= @match_count %></span>
     </div>
     <div class="column is-4">
       <%= link_to "Create new Ask", new_ask_path %>
@@ -45,14 +47,16 @@
     <div class="column is-4">
       <%= link_to "Glossary!", glossary_admin_path %>
       <br>
+      <%= link_to "Dispatch steps", dispatch_steps_admin_path %>
+      <br>
       <%= link_to "Yearbook", yearbook_admin_path %>
       <br>
       <%= link_to "Org chart", org_chart_path %>
     </div>
     <div class="column is-4">
-      <%= link_to "Review pending Community Resources", community_resources_path(is_approved: false) %> <span class="tag"><%= @announcements_pending_count %></span>
+      <%= link_to "Manage Community Resources", community_resources_path(is_approved: false) %> <span class="tag"><%= @announcements_pending_count %></span>
       <br>
-      <%= link_to "Review pending Announcements", announcements_path(is_approved: false) %> <span class="tag"><%= @community_resources_pending_count %></span>
+      <%= link_to "Manage Announcements", announcements_path(is_approved: false) %> <span class="tag"><%= @community_resources_pending_count %></span>
       <br>
       <%= link_to "Manage Volunteers", volunteer_admin_path %>
     </div>
@@ -114,7 +118,9 @@
     <% admin_buttons_list_3 = [
         ["categories"],
         ["contact_methods", "Contact Methods"],
-        ["custom_form_questions", "Form Questions"],
+        ["forms", "Forms"],
+        ["custom_form_questions", "Custom Form Questions"],
+        ["form_questions", "Form-Questions"],
         ["location_types"],
         ["mobility_string_translations", "Translations"],
         ["service_areas", "Service areas"],
