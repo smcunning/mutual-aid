@@ -6,8 +6,8 @@ class ContributionsController < ApplicationController
 
   def index
     @filter_types = BrowseFilter.filter_options_json
-    # The BrowserFilter takes the result of the parameters from the FilterType checkboxes and returns a list of contributions
-    filter = BrowseFilter.new(params, self)
+    # The BrowserFilter takes the result of the parameters that match the filter_type options and returns a list of contributions
+    filter = BrowseFilter.new(allowed_params, self)
     @contributions = ContributionBlueprint.render(filter.contributions, **filter.options)
     respond_to do |format|
       format.html
@@ -48,17 +48,10 @@ class ContributionsController < ApplicationController
   end
 
   private
-  #
-  # def filter_params
-  #   return Hash.new unless allowed_params && allowed_params.to_h.any?
-  #   allowed_params.to_h.filter { |key, _v| BrowseFilter::ALLOWED_PARAMS.keys.include? key}.tap do |hash|
-  #     hash.keys.each { |key| hash[key] = hash[key].keys}
-  #   end
-  # end
 
-  # def allowed_params
-  #   @allowed_params ||= params.permit(:format, **BrowseFilter::ALLOWED_PARAMS)
-  # end
+  def allowed_params
+    params.permit(:format, BrowseFilter::ALLOWED_PARAMS_FILTER)
+  end
 
   def set_contribution
     @contribution = Listing.find(params[:id])
