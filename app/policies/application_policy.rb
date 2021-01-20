@@ -12,16 +12,16 @@ class ApplicationPolicy
 
   class Scope
     include RoleUtils
-    attr_reader :user, :original_scope
+    attr_reader :user, :scope
 
-    def initialize(user, original_scope)
+    def initialize(user, scope)
       @user = user
-      @original_scope = original_scope
+      @scope = scope
     end
 
     # We default all permissions to false, and expect you to override as needed.
     def resolve
-      original_scope.none
+      scope.none
     end
   end
 
