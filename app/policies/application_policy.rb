@@ -1,21 +1,21 @@
 class ApplicationPolicy
   module RoleUtils
     def sys_admin?
-      acting_user.sys_admin_role?
+      user.sys_admin_role?
     end
 
     def admin?
-      acting_user.admin_role?
+      user.admin_role?
     end
   end
   include RoleUtils
 
   class Scope
     include RoleUtils
-    attr_reader :acting_user, :original_scope
+    attr_reader :user, :original_scope
 
-    def initialize(acting_user, original_scope)
-      @acting_user = acting_user
+    def initialize(user, original_scope)
+      @user = user
       @original_scope = original_scope
     end
 
@@ -25,13 +25,13 @@ class ApplicationPolicy
     end
   end
 
-  attr_reader :acting_user, :record
+  attr_reader :user, :record
 
-  def initialize(acting_user, record)
-    @acting_user = acting_user
+  def initialize(user, record)
+    @user = user
     @record = record
   end
-  
+
   # Pundit has a "policy scope" feature for narrowing down records returned by `Model.all`.
   # Using policy scopes is almost always more secure and more performant than iterating over
   # every returned record with an index action policy.
@@ -58,7 +58,7 @@ class ApplicationPolicy
   def update?;   change?;  end
   def edit?;     change?;  end
   def destroy?;  delete?;  end
-  
+
   # We default all permissions to false, and expect you to override as needed.
   private def read?;    false;  end
   private def add?;     false;  end
