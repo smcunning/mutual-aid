@@ -1,58 +1,14 @@
-<% person = @contribution.person %>
-<%= link_to "<i class=\"fas fa-arrow-left\"></i> View Contributions".html_safe, contributions_path %>
-
-<%= render "top_level_card", person: person, contribution: @contribution %>
-
-<br><br>
-<div class="columns">
-  <div class="contribution column">
-    <div class="summary">
-      <strong>Contribution:</strong>
-      <br>
-      <span class="title is-1">
-        <span class="<%= @contribution.icon_class %>"></span> <%= @contribution&.type %>: <%= @contribution&.all_tags_to_s&.upcase %>
-      </span>
-        <%#= edit(@contribution) %><!-- # TODO - add update action back in once we have moved controllers-->
-    </div>
-    <div class="created_at">Created on <%= shorthand_display(@contribution.created_at) %></div>
-
-    <%# create inexhaustible offer to check     %>
-    <!-- <% if @contribution.inexhaustible %>
-      <br>
-      <%= "<br>".html_safe if @contribution.title.present? %>
-      <span class="has-text-primary"><span class="fa fa-hourglass-half"></span>&nbsp;INHEXHAUSTIBLE (can be matched repeatedly)</span>
-      <%= "<br>".html_safe if @contribution.title.present? %>
-    <% end %>
-    <%= "<br>".html_safe if @contribution.title.present? || @contribution.description.present? %>
-    <div class="subtitle is-5"><%= @contribution.title %></div>
-    <div class="description"><%= @contribution.description %></div>
-    <br><br>
-    <%= triage_button(@contribution) %>
-    <br><br>
-    -->
-    
-    <br><br>
-  </div>
-  <div class="person column">
-    <div class="contact-info">
-      <strong>Created by:</strong>
-      <br>
-      <%= show_button(person, person&.name, "fa fa-user-circle", "title is-5", nil, contribution_id: @contribution.id) %>
-      <br><br>
-      <strong>Preferred contact info:</strong>
-      <br>
-      <span class="<%= person.preferred_contact_method.icon_class %>"></span>
-      <span class="subtitle is-5"><%= person.preferred_contact_info %></span>
-    </div>
-
-    <div class="all-time-match-info">
-      <br><br>
-      <strong>Participation summary:</strong>
-      <br>
-      <span><%= person.match_history %></span>
-    </div>
-  </div>
+<div class="title is-5">
+  Respond to Contribution: <%= link_to "go to Contributions page", contributions_path %>
+  <br>
+  <span class="subtitle is-7 is-italic"><%= link_to "(1. Triage (or log Communication), then 2. Add tentative Match)", dispatch_steps_path %></span>
 </div>
+
+<% person = @contribution.person %>
+<div class="block">
+  <%= link_to "<i class=\"fas fa-arrow-left\"></i> View Contributions".html_safe, contributions_path %>
+</div>
+<%= render "top_level_card", person: person, contribution: @contribution %>
 
 <div class="columns">
   <div class="column">
@@ -108,12 +64,4 @@
     <% end %>
     <%= no_matches_comments.uniq.join if no_matches_comments.uniq.length == 1 %>
   </div>
-</div>
-
-
-# for now
-<div class="title is-5">
-  Respond to Contribution: <%= link_to "go to Contributions page", contributions_path %>
-  <br>
-  <span class="subtitle is-7 is-italic"><%= link_to "(1. Triage (or log Communication), then 2. Add tentative Match)", dispatch_steps_path %></span>
 </div>
